@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>name</key>
+	<string>Blogger</string>
+	<key>ordering</key>
+	<array>
+		<string>CC9D2EFA-3097-4073-9662-CBCA320C5FAD</string>
+		<string>249DEB5F-FAD7-486E-A7F9-7625B53AC706</string>
+		<string>1F7C1D1A-0506-4851-818D-F2A680615501</string>
+		<string>994A5E59-321D-49BD-8EC8-4BA6B50FEC4D</string>
+		<string>8030C952-EE1F-4D66-909F-E52B1A580B0E</string>
+		<string>D71214CE-860C-48F4-9B8E-D0850A7A4A60</string>
+	</array>
+	<key>uuid</key>
+	<string>308112BB-DA43-466B-AC3E-7877D5F8F969</string>
+</dict>
+</plist>

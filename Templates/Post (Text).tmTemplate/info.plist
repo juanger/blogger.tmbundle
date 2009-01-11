@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>command</key>
+	<string>if [[ ! -f "$TM_NEW_FILE" ]]; then
+   TM_YEAR=`date +%Y` \
+   TM_DATE=`date +%Y-%m-%d` \
+   perl -pe 's/\$\{([^}]*)\}/$ENV{$1}/g' \
+      &lt; untitled.post.txt &gt; "$TM_NEW_FILE"
+fi</string>
+	<key>extension</key>
+	<string>post.txt</string>
+	<key>name</key>
+	<string>Post (Text)</string>
+	<key>uuid</key>
+	<string>D71214CE-860C-48F4-9B8E-D0850A7A4A60</string>
+</dict>
+</plist>
