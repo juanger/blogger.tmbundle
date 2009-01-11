@@ -1,0 +1,6 @@
+TextMate bundle for Blogger.
+
+Setup
+
+* You must set the GDATA_USER variable in TextMate:Preferences:Advanced:Shell Variables
+* Open a Post file from Blogger template
