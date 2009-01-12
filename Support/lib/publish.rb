@@ -10,16 +10,15 @@ include TextMate
 PublishNib = "#{ENV["TM_BUNDLE_SUPPORT"]}/nibs/Publish.nib"
 TextMode = ENV['TM_MODE'].scan(/Post — (.*)/)[0][0]
 
+blogger = GData::Blogger.new('')
+post = Post.new(ENV['TM_FILEPATH'], TextMode)
+
 UI.dialog(:nib => PublishNib, 
-        :parameters => {'blogs' => [], 'hideProgressIndicator' => false}) do |dialog|
-  
-  post = Post.new(ENV['TM_FILEPATH'], TextMode)
+          :parameters => {'blogs' => [], 'hideProgressIndicator' => false}) do |dialog|
   
   ##
   # Authenticate
   ##
-  
-  blogger = GData::Blogger.new('')
   
   user = ENV['GDATA_USER']
   password = Keychain.get_passwd(user)
@@ -52,6 +51,7 @@ UI.dialog(:nib => PublishNib,
   dialog.wait_for_input do |params|
     blog_id = params['returnArgument']
     button = params['returnButton']
+    # puts params.inspect
     if blog_id
       blogger.blog_id = blog_id
       post.categories = params['categories']
@@ -59,9 +59,10 @@ UI.dialog(:nib => PublishNib,
     end
     false
   end # end of wait
-  
-  reply = blogger.entry(post.title, post.content, post.categories)
-  link = Hpricot.parse(reply.body).at("/entry/link[@rel='alternate']")
-  
-  puts "<h1>Your post has been published!!</h1><br/><a href='#{link[:href]}'>#{link[:title]}</a>"
 end # End of Publish dialog
+
+reply = blogger.entry(post.title, post.content, post.categories)
+parser = Hpricot.parse(reply.body)
+link = parser.at("//link[@rel='alternate']")
+
+puts "<h1>Your post has been published!!</h1><br/><a href='#{link[:href]}'>#{link[:title]}</a>"
