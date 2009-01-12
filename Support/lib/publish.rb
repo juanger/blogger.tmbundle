@@ -15,7 +15,10 @@ UI.dialog(:nib => PublishNib,
   
   post = Post.new(ENV['TM_FILEPATH'], TextMode)
   
+  ##
   # Authenticate
+  ##
+  
   blogger = GData::Blogger.new('')
   
   user = ENV['GDATA_USER']
@@ -27,36 +30,38 @@ UI.dialog(:nib => PublishNib,
     blogger.authenticate(user,password)
   end
   
+  ##
+  # Get data
+  ##
+  
   feed = Hpricot.parse blogger.metafeed
-  
   blogs = []
-  # categories = []
-  
-  # Get the blogs list and categories
+  # Get the blogs list
   (feed/:entry).each do |blog|
     id = (blog/:id).inner_html
     title = (blog/:title).inner_html
     blogs << {'name' => title, 'id' => id.scan(/blog-(\d*)/)[0][0]}
-    # TODO: Find a way to show existing categories in the nib
-    # (blog/:category).each do |cat|
-    #   categories << { 'name' => cat[:term]}
-    # end
   end
   
-  # re-display de dialog
+  ##
+  # Re-display de dialog
+  ##
+  
   dialog.parameters = {'blogs' => blogs,'hideProgressIndicator' => true}
   
   dialog.wait_for_input do |params|
     blog_id = params['returnArgument']
     button = params['returnButton']
-    # puts params
     if blog_id
       blogger.blog_id = blog_id
       post.categories = params['categories']
       false
     end
     false
-  end
+  end # end of wait
   
-  blogger.entry(post.title, post.content, post.categories)
+  reply = blogger.entry(post.title, post.content, post.categories)
+  link = Hpricot.parse(reply.body).at("/entry/link[@rel='alternate']")
+  
+  puts "<h1>Your post has been published!!</h1><br/><a href='#{link[:href]}'>#{link[:title]}</a>"
 end # End of Publish dialog

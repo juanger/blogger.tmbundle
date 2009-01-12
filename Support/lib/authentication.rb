@@ -21,7 +21,7 @@ module Authentication
         end
         
         unless params['storePassword'] == 0
-          Keychain.save_password(user,password)
+          Keychain.save_passwd(user,password)
         end
         repeat
       end # end of wait
