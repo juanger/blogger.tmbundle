@@ -7,18 +7,18 @@
 	<key>command</key>
 	<string>#! /usr/bin/env ruby
 
-require "#{ENV["TM_BUNDLE_SUPPORT"]}/lib/publish"</string>
+require "#{ENV["TM_BUNDLE_SUPPORT"]}/lib/preview"</string>
 	<key>input</key>
 	<string>none</string>
 	<key>keyEquivalent</key>
-	<string>@p</string>
+	<string>^~@p</string>
 	<key>name</key>
-	<string>Publish</string>
+	<string>Preview</string>
 	<key>output</key>
 	<string>showAsHTML</string>
 	<key>scope</key>
 	<string>text.post, text.post text.html.textile</string>
 	<key>uuid</key>
-	<string>8030C952-EE1F-4D66-909F-E52B1A580B0E</string>
+	<string>4B0F4B09-C302-4E29-9DD4-609B51698F0E</string>
 </dict>
 </plist>
