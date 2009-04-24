@@ -42,6 +42,7 @@ module GData
 end
 
 unless ENV['GDATA_USER']
-  puts "You need to set GDATA_USER as your google login."
+  puts "You need to set GDATA_USER as your google login.\n" + 
+        "Also, ensure that you have installed GData and RedCloth as gems"
   exit
 end

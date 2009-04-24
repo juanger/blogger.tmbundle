@@ -13,7 +13,7 @@ class Post
   
   def parse(file)
     content = open(file).read
-    groups = content.scan(/Title:(.*?)\n(.*?)(?:✂------)+\n(.*)/im)
+    groups = content.scan(/Title:(.*?)\n(.*?)(?:✂------)*\n(.*)/im)
     
     @title = groups[0][0].strip
     @content = format_contents(groups[0][1].strip, groups[0][2].strip)
