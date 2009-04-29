@@ -5,7 +5,6 @@ require "#{ENV["TM_SUPPORT_PATH"]}/lib/UI"
 include TextMate
 
 PublishNib = "#{ENV["TM_BUNDLE_SUPPORT"]}/nibs/Publish.nib"
-TextMode = ENV['TM_MODE'].scan(/Post — (.*)/)[0][0]
 
 UI.dialog(:nib => PublishNib, 
           :parameters => {'blogs' => [], 'hideProgressIndicator' => false}) do |dialog|
