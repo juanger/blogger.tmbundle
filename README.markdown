@@ -25,6 +25,4 @@ These are the currently supported commands:
 TODO
 ----
 
-* Markdown support
-* Save Drafts in blogger.com
-* Drag and drop pictures (Saving them to Picasa )
+* Unbreak everything I broke by changing the `Blogger` gem in for the `GData` gem. 
