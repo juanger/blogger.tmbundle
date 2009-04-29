@@ -6,12 +6,11 @@ This bundle's goal is to provide an easy way to use Google's Blogger from TextMa
 Setup
 -----
 
-* You'll need RedCloth and GData gems.
-* You must set the `GDATA_USER` variable in `TextMate:Preferences:Advanced:Shell Variables`
-* Open a Post file from Blogger template
-* Use the publish command
+* Install the [Blogger Gem][1] as well as any formatting gems you want to use with it, e.g., [RDiscount][2]
+* Set the `GDATA_USER` variable in `TextMate:Preferences:Advanced:Shell Variables`
 
-If you want to use the extended post feature, you'll need to setup your blogger template accordingly.
+[1]: http://rubyforge.org/projects/blogger/
+[2]: http://github.com/rtomayko/rdiscount/tree/master
 
 Usage
 -----
