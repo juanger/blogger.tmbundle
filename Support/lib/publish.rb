@@ -1,5 +1,5 @@
 require 'rubygems'
-require 'gdata/blogger'
+require 'Blogger'
 require "#{ENV["TM_BUNDLE_SUPPORT"]}/lib/gdata_extension"
 require "#{ENV["TM_BUNDLE_SUPPORT"]}/lib/post.rb"
 require "#{ENV["TM_BUNDLE_SUPPORT"]}/lib/authentication.rb"
@@ -12,34 +12,16 @@ TextMode = ENV['TM_MODE'].scan(/Post — (.*)/)[0][0]
 
 UI.dialog(:nib => PublishNib, 
           :parameters => {'blogs' => [], 'hideProgressIndicator' => false}) do |dialog|
-  
-  blogger = GData::Blogger.new('')
-  post = Post.new(ENV['TM_FILEPATH'], TextMode)
-  
-  ##
-  # Authenticate
-  ##
-  
-  user = ENV['GDATA_USER']
-  password = Keychain.get_passwd(user)
-  
-  if password.empty?
-    Authentication.dialog(blogger,user)
-  else
-    blogger.authenticate(user,password)
-  end
-  
-  ##
-  # Get data
-  ##
-  
-  feed = Hpricot.parse blogger.metafeed
-  blogs = []
+
+  user_id = "#{ENV[GDATA_USER_ID]}"
+  username = "#{ENV[GDATA_USERNAME]}"
+  password = "#{ENV[GDATA_PASSWORD]}"
+  account = Blogger::Account.new(user_id, username, password)
+
   # Get the blogs list
-  (feed/:entry).each do |blog|
-    id = (blog/:id).inner_html
-    title = (blog/:title).inner_html
-    blogs << {'name' => title, 'id' => id.scan(/blog-(\d*)/)[0][0]}
+  blogs = []
+  account.blogs.each do |blog|
+    blogs << {'name' => blog.title, 'id' => blog.id}
   end
   
   ##
@@ -55,12 +37,14 @@ UI.dialog(:nib => PublishNib,
     if button == 'Cancel'
       puts "<h1>Publishing cancelled</h1>"
     else
-      blogger.blog_id = blog_id
-      post.categories = params['categories']
-      reply = blogger.entry(post.title, post.content, post.categories)
-      parser = Hpricot.parse(reply.body)
-      link = parser.at("//link[@rel='alternate']")
-      puts "<h1>Your post has been published!!</h1><br/><a href='#{link[:href]}'>#{link[:title]}</a>"
+      #FIXME Obviously, this is not acceptable.
+      post = Blogger::Post.new(:title => 'DRAFT FROM TEXTMATE', params['categories'])
+      post.draft = true  # FIXME Turn this off after testing
+      post.content = open(ENV['TM_FILEPATH']).read
+      # FIXME Formatting?
+      account.post(blog_id, post)
+      # FIXME Restore link below
+      puts "<h1>Your post has been published!!</h1>"
     end
     false
   end # end of wait
