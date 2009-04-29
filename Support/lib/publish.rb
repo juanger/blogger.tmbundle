@@ -38,7 +38,7 @@ UI.dialog(:nib => PublishNib,
       puts "<h1>Publishing cancelled</h1>"
     else
       #FIXME Obviously, this is not acceptable.
-      post = Blogger::Post.new(:title => 'DRAFT FROM TEXTMATE', params['categories'])
+      post = Blogger::Post.new(:title => 'DRAFT FROM TEXTMATE', :categories => params['categories'])
       post.draft = true  # FIXME Turn this off after testing
       post.content = open(ENV['TM_FILEPATH']).read
       # FIXME Formatting?
