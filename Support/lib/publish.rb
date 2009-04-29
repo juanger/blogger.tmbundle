@@ -1,8 +1,5 @@
 require 'rubygems'
 require 'Blogger'
-require "#{ENV["TM_BUNDLE_SUPPORT"]}/lib/gdata_extension"
-require "#{ENV["TM_BUNDLE_SUPPORT"]}/lib/post.rb"
-require "#{ENV["TM_BUNDLE_SUPPORT"]}/lib/authentication.rb"
 require "#{ENV["TM_SUPPORT_PATH"]}/lib/UI"
 
 include TextMate
