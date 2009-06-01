@@ -1,5 +1,6 @@
 require 'rubygems'
 require 'Blogger'
+require "#{ENV["TM_BUNDLE_SUPPORT"]}/lib/authentication.rb"
 require "#{ENV["TM_SUPPORT_PATH"]}/lib/UI"
 
 include TextMate
@@ -9,10 +10,18 @@ PublishNib = "#{ENV["TM_BUNDLE_SUPPORT"]}/nibs/Publish.nib"
 UI.dialog(:nib => PublishNib, 
           :parameters => {'blogs' => [], 'hideProgressIndicator' => false}) do |dialog|
 
-  user_id = "#{ENV[GDATA_USER_ID]}"
-  username = "#{ENV[GDATA_USERNAME]}"
-  password = "#{ENV[GDATA_PASSWORD]}"
-  account = Blogger::Account.new(user_id, username, password)
+  username = ENV['GDATA_USERNAME']
+  password = Keychain.get_passwd(username)
+
+  account = Blogger::Account.new()
+
+  if password.empty?
+    Authentication.dialog(account,username)
+  else
+    account.authenticate(username,password)
+  end
+  
+  # account = Blogger::Account.new(username, password)
 
   # Get the blogs list
   blogs = []
