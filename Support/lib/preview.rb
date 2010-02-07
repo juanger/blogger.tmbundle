@@ -1,5 +1,5 @@
-require 'rubygems'
-require "#{ENV["TM_BUNDLE_SUPPORT"]}/lib/post.rb"
+require "#{ENV["TM_BUNDLE_SUPPORT"]}/lib/setup"
+require "post"
 
 TextMode = ENV['TM_MODE'].scan(/Post — (.*)/)[0][0]
 

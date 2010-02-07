@@ -1,0 +1,8 @@
+History.txt
+Manifest.txt
+README.txt
+Rakefile
+lib/blogger.rb
+lib/google_auth.rb
+lib/helpers.rb
+test/test_blogger.rb

@@ -1,0 +1,19 @@
+/opt/local/bin/ruby extconf.rb
+creating Makefile
+
+make
+Makefile:128: warning: overriding commands for target `/Users/juanger/Library/Application'
+Makefile:122: warning: ignoring old commands for target `/Users/juanger/Library/Application'
+/usr/bin/gcc-4.2 -I. -I/opt/local/lib/ruby/1.8/i686-darwin10 -I/opt/local/lib/ruby/1.8/i686-darwin10 -I. -I/opt/local/include -D_XOPEN_SOURCE -D_DARWIN_C_SOURCE   -fno-common -O2 -arch x86_64  -fno-common -pipe -fno-common  -O2  -arch x86_64 -c redcloth_attributes.c
+/usr/bin/gcc-4.2 -I. -I/opt/local/lib/ruby/1.8/i686-darwin10 -I/opt/local/lib/ruby/1.8/i686-darwin10 -I. -I/opt/local/include -D_XOPEN_SOURCE -D_DARWIN_C_SOURCE   -fno-common -O2 -arch x86_64  -fno-common -pipe -fno-common  -O2  -arch x86_64 -c redcloth_inline.c
+/usr/bin/gcc-4.2 -I. -I/opt/local/lib/ruby/1.8/i686-darwin10 -I/opt/local/lib/ruby/1.8/i686-darwin10 -I. -I/opt/local/include -D_XOPEN_SOURCE -D_DARWIN_C_SOURCE   -fno-common -O2 -arch x86_64  -fno-common -pipe -fno-common  -O2  -arch x86_64 -c redcloth_scan.c
+/usr/bin/gcc-4.2 -dynamic -bundle -undefined suppress -flat_namespace -o redcloth_scan.bundle redcloth_attributes.o redcloth_inline.o redcloth_scan.o -L. -L/opt/local/lib -L. -L/opt/local/lib  -arch x86_64  -lruby  -lpthread -ldl -lobjc  
+
+make install
+Makefile:128: warning: overriding commands for target `/Users/juanger/Library/Application'
+Makefile:122: warning: ignoring old commands for target `/Users/juanger/Library/Application'
+mkdir -p /Users/juanger/Library/Application
+mkdir -p Support/TextMate/Bundles/blogger.tmbundle/Support/vendor/gems/RedCloth-4.2.2/lib
+/usr/bin/install -c -m 0755 redcloth_scan.bundle /Users/juanger/Library/Application Support/TextMate/Bundles/blogger.tmbundle/Support/vendor/gems/RedCloth-4.2.2/lib
+install: /Users/juanger/Library/Application: Inappropriate file type or format
+make: *** [Support/TextMate/Bundles/blogger.tmbundle/Support/vendor/gems/RedCloth-4.2.2/lib/redcloth_scan.bundle] Error 71

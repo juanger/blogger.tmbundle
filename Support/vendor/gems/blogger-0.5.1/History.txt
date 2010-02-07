@@ -1,0 +1,13 @@
+=== 0.5.1 / 2009-03-25
+
+* Fixed a bug with Blogger::Account#post when userid is not provided
+* Fixed typo in the 3-parameter constructor of Blogger::Account
+
+=== 0.5.0 / 2009-03-24
+
+* First release
+
+  * Full access to the Blogger API
+  * 6 markup/markdown gems supported
+  * punch + pie
+
