@@ -133,7 +133,7 @@ module Blogger
     def retrieve_blogs(user_id="")
       NotLoggedInError.new("You aren't logged into Blogger.").raise unless authenticated?
       
-      user_id = (user_id.empty?) ? @user_id : user_id
+      user_id = (user_id.empty?) ? @user_id || 'default' : user_id
       
       path = "/feeds/#{user_id}/blogs"   
       resp = GoogleAuth.get(path, @auth_token)
