@@ -1,3 +1,0 @@
-require 'bundler'
-
-Bundler.setup
