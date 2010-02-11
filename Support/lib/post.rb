@@ -1,34 +1,42 @@
-require 'RedCloth'
+require 'blogger'
 
-class Post
-  attr_reader :title, :content
-  attr_accessor :categories
-  
-  def initialize(file, format = 'Text')
-    @format = format
-    parse(file)
+MODES = {"Text" => :raw, "Textile" => :redcloth}
+CurrentMode = ENV['TM_MODE'].match(/Post — (.*)/)[1]
+
+class Post < Blogger::Post
+  def initialize(opts={})
+    super
+    @formatter = MODES[CurrentMode]
   end
   
   private
   
-  def parse(file)
-    content = open(file).read
-    groups = content.scan(/Title:(.*?)\n(.*?)(?:✂------)*\n(.*)/im)
-    
-    @title = groups[0][0].strip
-    @content = format_contents(groups[0][1].strip, groups[0][2].strip)
-  end
-  
-  def format_contents(summary, extended)
-    case @format
-    when 'Text'
-      summary + fullpost(extended)
-    when 'Textile'
-      RedCloth.new(summary).to_html + fullpost(RedCloth.new(extended).to_html)
+  def parse
+    groups = @content.gsub('✂------'*10, "<!more>").scan(/Title:(.*?)\n(.*?)<!more>\n(.*)/im)
+    if groups[0]
+      @title = groups[0][0].strip
+      @content = groups[0][1].strip
+      @full = groups[0][2].strip
+    else
+      match = @content.match(/Title:(.*?)\n(.*)/im)
+      @title = match[1]
+      @content = match[2]
     end
   end
   
-  def fullpost(text)
-    unless text.empty? then "\n<span id=\"fullpost\">\n #{text}\n </span>\n" else '' end
+  def format_content #:nodoc:
+    parse
+    send("format_#{@formatter}".to_sym)
   end
+  
+  def format_raw #:nodoc:
+    @content + @full.to_s
+  end
+  
+  def format_redcloth #:nodoc:
+    require 'redcloth'
+    full = "\n<span id=\"fullpost\">\n #{RedCloth.new(@full).to_html}\n </span>\n" if @full
+    RedCloth.new(@content).to_html + full.to_s
+  end
+
 end
