@@ -1,0 +1,8 @@
+require 'bundler/cli'
+
+begin
+  Bundler::CLI.start
+rescue Bundler::BundlerError => e
+  Bundler.ui.error e.message
+  exit e.status_code
+end
