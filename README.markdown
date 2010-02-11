@@ -6,11 +6,8 @@ This bundle's goal is to provide an easy way to use Google's Blogger from TextMa
 Setup
 -----
 
-* Install the [Blogger Gem][1] as well as any formatting gems you want to use with it, e.g., [RDiscount][2]
-* Set the `GDATA_USER` variable in `TextMate:Preferences:Advanced:Shell Variables`
-
-[1]: http://rubyforge.org/projects/blogger/
-[2]: http://github.com/rtomayko/rdiscount/tree/master
+* Set the `BLOGGER_USERNAME` variable in `TextMate:Preferences:Advanced:Shell Variables`
+* When running your first command, all the necessary gems will be downloaded.
 
 Usage
 -----
@@ -21,8 +18,26 @@ These are the currently supported commands:
 
 * `Preview`
 * `Publish`
+ * Presents your blogs list and lets you choose one
+ * You can add categories to your post
+
+These are the currently supported formats:
+
+* Plain Text
+* Textile
+
+It also supports the old style "Read More" links:
+
+`<span id="fullpost">
+  Hidden part of the post
+</span>`
 
 TODO
 ----
 
-* Unbreak everything I broke by changing the `Blogger` gem in for the `GData` gem. 
+* Support more formats
+* Drafts
+* Edit currently published posts
+* Support the new "Read More" blogger feature
+
+
