@@ -1,4 +1,5 @@
 require "#{ENV["TM_BUNDLE_SUPPORT"]}/lib/setup"
+require "post"
 require 'blogger'
 require "authentication"
 require "UI"
@@ -17,7 +18,7 @@ UI.dialog(:nib => PublishNib,
           :parameters => {'blogs' => [], 'hideProgressIndicator' => false}) do |dialog|
   
   password = Keychain.get_passwd(username)
-  account = Blogger::Account.new('','')
+  account = Blogger::Account.new('default','','')
 
   if password.empty?
     Authentication.dialog(account,username)
@@ -40,15 +41,11 @@ UI.dialog(:nib => PublishNib,
   dialog.wait_for_input do |params|
     blog_id = params['returnArgument']
     button = params['returnButton']
-    # puts params.inspect
     if button == 'Cancel'
       puts "<h1>Publishing cancelled</h1>"
     else
-      #FIXME Obviously, this is not acceptable.
-      post = Blogger::Post.new(:title => 'DRAFT FROM TEXTMATE', :categories => params['categories'])
-      post.draft = true  # FIXME Turn this off after testing
-      post.content = open(ENV['TM_FILEPATH']).read
-      # FIXME Formatting?
+      post = Post.new()
+      post.content = File.read(ENV['TM_FILEPATH'])
       account.post(blog_id, post)
       # FIXME Restore link below
       puts "<h1>Your post has been published!!</h1>"
