@@ -1,3 +1,5 @@
-vendor/gems
-vendor/specifications
-vendor/doc
+Support/vendor/gems
+Support/vendor/specifications
+Support/vendor/doc
+Support/vendor/cache
+Support/vendor/bin

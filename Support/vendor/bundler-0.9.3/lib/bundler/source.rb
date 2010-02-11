@@ -30,7 +30,7 @@ module Bundler
         gem_path  = Gem::RemoteFetcher.fetcher.download(spec, uri, destination)
         Bundler.ui.debug "  * Installing"
         installer = Gem::Installer.new gem_path,
-          :install_dir         => Gem.dir.gsub(/ /, "\\ "),
+          :install_dir         => Gem.dir,
           :ignore_dependencies => true,
           :wrappers            => true,
           :env_shebang         => true,
@@ -322,6 +322,38 @@ module Bundler
       def in_cache(&blk)
         Dir.chdir(cache_path, &blk)
       end
+    end
+  end
+end
+
+require 'rubygems/ext'
+
+class Gem::Ext::Builder
+  def self.make(dest_path, results)
+    unless File.exist? 'Makefile' then
+      raise Gem::InstallError, "Makefile not found:\n\n#{results.join "\n"}" 
+    end
+
+    mf = File.read('Makefile')
+    
+    dest_path = dest_path.gsub(/ /, "\\ ")
+    mf = mf.gsub(/^RUBYARCHDIR\s*=\s*\$[^$]*/, "RUBYARCHDIR = #{dest_path}")
+    mf = mf.gsub(/^RUBYLIBDIR\s*=\s*\$[^$]*/, "RUBYLIBDIR = #{dest_path}")
+
+    File.open('Makefile', 'wb') {|f| f.print mf}
+
+    make_program = ENV['make']
+    unless make_program then
+      make_program = (/mswin/ =~ RUBY_PLATFORM) ? 'nmake' : 'make'
+    end
+
+    ['', ' install'].each do |target|
+      cmd = "#{make_program}#{target}"
+      results << cmd
+      results << `#{cmd} #{redirector}`
+
+      raise Gem::InstallError, "make#{target} failed:\n\n#{results}" unless
+        $?.success?
     end
   end
 end
