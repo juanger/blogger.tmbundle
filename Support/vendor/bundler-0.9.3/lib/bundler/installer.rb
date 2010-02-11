@@ -14,7 +14,6 @@ module Bundler
 
       specs.sort_by { |s| s.name }.each do |spec|
         # unless spec.source.is_a?(Source::SystemGems)
-          Bundler.ui.info "Bundler root: #{Bundler.root}"
           Bundler.ui.info "Installing #{spec.name} (#{spec.version}) from #{spec.source} "
         # end
 
